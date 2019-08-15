@@ -10,45 +10,38 @@ import {
   View,
   Button
 } from "react-native";
-import UserHomePage from './UserHomePage'
-import SignUpForm from './SignUpForm'
-
-
+import UserHomePage from "./UserHomePage";
+import SignUpForm from "./SignUpForm";
 
 class SignInForm extends Component {
-
   state = {
-    username: '',
-    password: '',
-    isLoggedIn: false,
-    newUser: false
-  }
-
- 
-
-
+    username: "",
+    password: ""
+  };
 
   render() {
-   
     return (
       <View style={styles.MainContainer}>
         <KeyboardAvoidingView>
           <Text style={styles.WelcomeText}> Welcome!</Text>
-          <TextInput type="email" style={styles.textInput} placeholder="email" />
+          <TextInput
+            type="email"
+            style={styles.textInput}
+            placeholder="email"
+          />
           <TextInput style={styles.textInput} placeholder="password" />
         </KeyboardAvoidingView>
         <TouchableOpacity
           style={styles.SubmitButtonStyle}
           activeOpacity={0.3}
-          onPress={() => this.setState({isLoggedIn: true})}
+          onPress={() => this.setState({ isLoggedIn: true })}
         >
           <Text style={styles.TextStyle}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.SubmitButtonStyle}
           activeOpacity={0.3}
-          onPress={() => this.setState({newUser: true})}
-         
+          onPress={() => this.props.navigation.navigate("SignUpForm")}
         >
           <Text style={styles.TextStyle}>Create An Account</Text>
         </TouchableOpacity>
@@ -89,14 +82,15 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   textInput: {
-    fontSize: 18,
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    //color: 'white',
-    height: 50,
+    height: 40,
+    fontSize: 20,
+    width: "90%",
+    borderColor: "#9b9b9b",
+    borderBottomWidth: 1,
+    marginTop: 8,
+    marginVertical: 15,
     justifyContent: "center",
-    marginBottom: 15,
-    marginLeft: 30,
-    marginRight: 30
+    flexDirection: "column"
   }
 });
 
