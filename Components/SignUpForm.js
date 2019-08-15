@@ -11,7 +11,8 @@ import {
   Button,
   DatePickerIOS
 } from "react-native";
-import {db} from '../firebase.js'
+import {authUser} from '../firebase.js'
+
 
 
 
@@ -20,18 +21,26 @@ class SignUpForm extends Component {
   constructor() {
     super()
     this.state = {
-      firstName: '',
       email: "",
-      password: "",
-      birthday: ""
+      password: ""
     };
    
     
   }
 
-  test = () => {
-    db.ref('/test').push({'test2':'test2'})
+  createUser = () => {
+      let {email, password} = this.state
+      authUser
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+            this.props.navigation.navigate("UserHomePage")
+        })
+        .catch((error) => {
+            alert(error)
+        })
   }
+
+
 
   
 
@@ -41,12 +50,6 @@ class SignUpForm extends Component {
     return (
       <View style={styles.MainContainer}>
         <Text style={styles.WelcomeText}>Please fill out:</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="first name"
-          onChangeText={(firstName) => this.setState({ firstName })}
-          value={this.state.firstName}
-        />
         <TextInput
           style={styles.textInput}
           placeholder="email"
@@ -59,16 +62,10 @@ class SignUpForm extends Component {
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
-        <TextInput
-          style={styles.textInput}
-          placeholder="MM/DD/YY"
-          onChangeText={(birthday) => this.setState({ birthday })}
-          value={this.state.birthday}
-        />
         <TouchableOpacity
           style={styles.SubmitButtonStyle}
           activeOpacity={0.3}
-          onPress={() => this.test()}
+          onPress={() => this.createUser()}
         >
           <Text style={styles.TextStyle}>Submit</Text>
         </TouchableOpacity>
